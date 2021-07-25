@@ -1,0 +1,24 @@
+{
+    "name" : "Chrome Extension Starter Code",
+    "description": "Start Coding.",
+    "version" : "1.0",
+    "manifest_version" : 3,
+    "background" : {
+        "service_worker" : "background.js"
+    },
+    "permissions" : ["storage", "scripting", "activeTab"],
+    "options_page": "options.html",
+    "content_scripts": [{
+        "matches":["https://*/*"],
+        "js":["contentScript.js"]
+    }],
+    "action" : {
+        "default_popup" : "popup.html",
+        "default_icon": {
+            "16": "/img/icon16.png",
+            "32": "/img/icon32.png",
+            "48": "/img/icon48.png",
+            "128": "/img/icon128.png"
+        }
+    }
+}
