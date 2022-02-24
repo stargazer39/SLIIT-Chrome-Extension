@@ -3,10 +3,7 @@ import $ from "jquery";
 chrome.storage.sync.get('blocked_modules', (res) => {
     if(res.blocked_modules){
         for(const m of res.blocked_modules.modules){
-            $(`a[title="${m}"]`).css({
-                display: "none",
-            });
-            console.log(m);
+            hideModule(m);
         }
     }
 })
@@ -34,4 +31,10 @@ function getTabs(): string[]{
     }
 
     return site_array;
+}
+
+function hideModule(mod : string){
+    $(`a[title="${mod}"]`).css({
+        display: "none",
+    });
 }

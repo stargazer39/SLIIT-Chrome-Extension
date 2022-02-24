@@ -1,4 +1,21 @@
 body {
-    width : 500px;
-    height: 600px;
+    width : 400px;
+    height: 500px;
+}
+
+.mDisplay {
+    padding: 0 10px 0 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.mDisplay > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spacer {
+    flex-shrink: 0;
+    flex-grow: 1;
 }

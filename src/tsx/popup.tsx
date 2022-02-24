@@ -105,8 +105,9 @@ function ModuleDisplay(props : ModulesProps){
     }
 
     return (
-        <div>
-            {props.module.title} 
+        <div className="mDisplay">
+            <span>{props.module.title}</span>
+            <span className='spacer'></span>
             <button onClick={toggleActive}>{active ? "Enable" : "Disable"}</button>
         </div>
     )
