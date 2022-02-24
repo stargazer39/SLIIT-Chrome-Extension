@@ -52,50 +52,50 @@ export function init() {
 function forElem(j_elem : JQuery<HTMLElement>){
     try{
         if(j_elem.css("background-color").search("226, 165, 0") >= 0){
-        if(!j_elem.hasClass("newbackground"))
-                j_elem.addClass("newbackground");
+            if(!j_elem.hasClass("newbackground"))
+                    j_elem.addClass("newbackground");
         }
     }catch(e){} 
     
     try{
         if(j_elem.css("background-color").search("50, 58, 69") >= 0){
-        if(!j_elem.hasClass("newbg2"))
-                j_elem.addClass("newbg2");
+            if(!j_elem.hasClass("newbg2"))
+                    j_elem.addClass("newbg2");
         }
     }catch(e){}
     
     try{
         if(j_elem.css("background-color").search("58, 69, 75") >= 0){
-        if(!j_elem.hasClass("newbg3"))
-                j_elem.addClass("newbg3");
+            if(!j_elem.hasClass("newbg3"))
+                    j_elem.addClass("newbg3");
         }
     }catch(e){}
     
     try{
         if(j_elem.css("background-color").search("239, 188, 0") >= 0){
-        if(!j_elem.hasClass("newbg4"))
-                j_elem.addClass("newbg4");
+            if(!j_elem.hasClass("newbg4"))
+                    j_elem.addClass("newbg4");
         }
     }catch(e){}
     
     try{
         if(j_elem.css("border-color").search("226, 165, 0") >= 0){
-        if(!j_elem.hasClass("newborder"))
-                j_elem.addClass("newborder");
+            if(!j_elem.hasClass("newborder"))
+                    j_elem.addClass("newborder");
         }
     }catch(e){}
     
     try{
         if(j_elem.css("color").search("226, 165, 0") >= 0){
-        if(!j_elem.hasClass("newtext"))
-                j_elem.addClass("newtext");
+            if(!j_elem.hasClass("newtext"))
+                    j_elem.addClass("newtext");
         }
     }catch(e){}
     
     try{
-        if(j_elem.css("color").search("#e2a500") >= 0){
-        if(!j_elem.hasClass("newtext"))
-                j_elem.addClass("newtext");
+        if(j_elem.css("color").search("e2a500") >= 0){
+            if(!j_elem.hasClass("newtext"))
+                    j_elem.addClass("newtext");
         }
     }catch(e){}
 }
@@ -157,6 +157,9 @@ async function injectStyles(theme : Theme){
 	}
 	.newtext {
 	    color: var(--accent-text) !important;
+	}
+    li::before {
+	    color: var(--accent-second) !important;
 	}
 	.navbar .nav>li>a:focus,
 	.navbar .nav>li>a:hover,
