@@ -2,6 +2,8 @@ import $ from "jquery";
 import themes, { Theme } from "./themes";
 
 var theme : any = themes[0];
+let ready = false;
+let listeners : Function[] = [];
 
 export function init() {
     var MutationObserver = window.MutationObserver;
@@ -11,13 +13,18 @@ export function init() {
 
     observerhtml.observe(node,{ childList: true,subtree: true });
 
-    function mutationhtml(data : any){
+    async function mutationhtml(data : any){
         data.forEach (function (mutation : any){
-            mutation.addedNodes.forEach(function(each : any){
+            mutation.addedNodes.forEach(async function(each : any){
                 //console.log(each.nodeName);
                 if(each.nodeName == "BODY"){
-                    injectStyles(theme);
-                    node =  document.body;
+                    await injectStyles(theme);
+                    ready = true;
+                    for(let l of listeners){
+                        l();
+                    }
+                    listeners = [];
+                    node = document.body;
                     observer.observe(node,{ childList: true,subtree: true });
                     observerhtml.disconnect();
                 }
@@ -93,30 +100,10 @@ function forElem(j_elem : JQuery<HTMLElement>){
     }catch(e){}
 }
 
-function injectStyles(theme : Theme){
-    // New img element for background 
-    let bg = $("<img id='bg-img'>");
-    bg.attr("src", chrome.runtime.getURL('themes/img/' + theme.image[0].path));
-    bg.css({
-        width:"100%",
-        height:"100%",
-        objectFit:"cover",
-        position:"fixed",
-        zIndex:"-1",
-        top:"0",
-        opacity:"0",
-        transition: "all 200ms",
-        filter: "contrast(1.4)",
-        objectPosition: "50% 20%"
-    });
-    bg.on("load", () => {
-        bg.css({ opacity : 1 });
-    })
-    
-    // Add it to the body
-    $(document.body).append(bg)
-    
+async function injectStyles(theme : Theme){
     // Inject styles to the dom
+    const bg_src = chrome.runtime.getURL('themes/img/' + theme.image[0].path);
+
 	$(`<style type='text/css'> 
 	:root{
 	    --accent-main: ` + theme.color.accent_main + `;--accent-second: ` + theme.color.accent_second + `;
@@ -124,7 +111,7 @@ function injectStyles(theme : Theme){
         --secondary-bgcol: ` + theme.color.second_bgcol + `;
         --menu-bgcol:` + theme.color.menu_bgcol + `;
 	    --wrapperbgcol:` +  theme.color.wrapper_bgcol + `;
-	    --bg-img: url(` + chrome.runtime.getURL('themes/img/' + theme.image[0].path) + `);
+	    --bg-img: url(` +bg_src + `);
 	}
 	body {
         background: url() !important;
@@ -191,10 +178,15 @@ function injectStyles(theme : Theme){
 	</style>`).appendTo("head");
 }
 
-export function applyTheme(theme : Theme){
-    const bg_src = chrome.runtime.getURL('themes/img/' + theme.image[0].path);
-    const img = $('#bg-img');
+export async function applyTheme(theme : Theme){
+    if(!ready){
+        listeners.push(() => { applyTheme(theme) });
+        return
+    }
 
+    console.log(theme);
+    const bg_src = chrome.runtime.getURL('themes/img/' + theme.image[0].path);
+    await setBGimage(bg_src);
     document.documentElement.style.setProperty('--accent-main', theme.color.accent_main);
     document.documentElement.style.setProperty('--accent-second', theme.color.accent_second);
     document.documentElement.style.setProperty('--accent-text', theme.color.accent_text);
@@ -202,8 +194,44 @@ export function applyTheme(theme : Theme){
     document.documentElement.style.setProperty('--bg-img', `url(${bg_src})`);
     document.documentElement.style.setProperty('--menu-bgcol', theme.color.menu_bgcol);
     document.documentElement.style.setProperty('--wrapperbgcol', theme.color.wrapper_bgcol);
+}
 
-    // Onload listener previously registerd will take care of showing the image onload
-    img.css({ opacity: 0 });
-    img.attr("src", bg_src);
+async function setBGimage(bg_src : string) {
+    return new Promise((res,rej) => {
+        const img = $('#bg-img');
+        if(img.length < 1){
+            // New img element for background 
+            let bg = $("<img id='bg-img'>");
+            bg.attr("src", bg_src);
+            bg.css({
+                width:"100%",
+                height:"100%",
+                objectFit:"cover",
+                position:"fixed",
+                zIndex:"-1",
+                top:"0",
+                opacity:"0",
+                transition: "all 200ms",
+                filter: "contrast(1.4)",
+                objectPosition: "50% 20%"
+            });
+            // Add it to the body
+            $(document.body).append(bg);
+
+            bg.on("load", () => {
+                bg.css({ opacity : 1 });
+                bg.off("load");
+                res(null);
+            })
+        }else{
+            img.css({ opacity: 0 });
+            img.attr("src", bg_src);
+            img.on("load", () => {
+                img.css({ opacity : 1 });
+                img.off("load");
+                res(null);
+            })
+        }
+    })
+    
 }

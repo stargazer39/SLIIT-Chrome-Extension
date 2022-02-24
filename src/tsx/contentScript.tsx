@@ -3,9 +3,9 @@ import { applyTheme, init } from "./themeChanger";
 
 // Theme Logic
 init();
-chrome.storage.sync.get('active_theme', (res) => {
+chrome.storage.sync.get('active_theme', async (res) => {
     if(res.active_theme)
-        applyTheme(res.active_theme)
+        await applyTheme(res.active_theme)
 })
 
 // Bolcked Modules logic
