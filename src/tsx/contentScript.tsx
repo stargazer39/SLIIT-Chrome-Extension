@@ -1,12 +1,24 @@
 import $ from "jquery";
+import { applyTheme, init } from "./themeChanger";
 
-chrome.storage.sync.get('blocked_modules', (res) => {
-    if(res.blocked_modules){
-        for(const m of res.blocked_modules.modules){
-            hideModule(m);
-        }
-    }
+// Theme Logic
+init();
+chrome.storage.sync.get('active_theme', (res) => {
+    if(res.active_theme)
+        applyTheme(res.active_theme)
 })
+
+// Bolcked Modules logic
+$(() => {
+    chrome.storage.sync.get('blocked_modules', (res) => {
+        if(res.blocked_modules){
+            for(const m of res.blocked_modules.modules){
+                hideModule(m);
+            }
+        }
+    })
+})
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     console.log(msg);
     switch(msg.command){
@@ -14,6 +26,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             sendResponse({
                 modules: getTabs(),
             })
+            break;
+        case "SET_THEME":
+            applyTheme(msg.theme);
+            break;
     }
 })
 

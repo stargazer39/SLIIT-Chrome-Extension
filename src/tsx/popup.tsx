@@ -1,12 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom'
+import {
+    goBack,
+    goTo,
+    popToTop,
+    Link,
+    Router,
+    getCurrent,
+    getComponentStack,
+} from 'react-chrome-extension-router';
+import themes from './themes';
 
 type Module = {
     active: boolean,
     title: string
 }
 
-function PopupHome(){
+function Home() {
+    return (
+        <div>
+            <Link component={ModulesManager}>
+                <button>Modules</button>
+            </Link><br></br>
+            <Link component={ThemeSelecter}>
+                <button>Themes</button>
+            </Link>
+        </div>
+    )
+}
+
+function ModulesManager(){
     const [modules, setModules] = useState<Module[]>([]);
 
     useEffect(() => {
@@ -24,7 +47,6 @@ function PopupHome(){
                     return { active: false, title: val }
                 })
 
-                // setModules(new_modules);
                  // Get old preference form chrome.storage
                 chrome.storage.sync.get('blocked_modules', (res) => {
                     if(!res.blocked_modules){
@@ -32,6 +54,7 @@ function PopupHome(){
                             modules: [],
                         }})
                         console.log(res, "Reset");
+                        setModules(new_modules);
                         return;
                     }
                     console.log(res);
@@ -113,10 +136,48 @@ function ModuleDisplay(props : ModulesProps){
     )
 }
 
-// async function sendToTab(obj : any){
-    
-// }
+function ThemeSelecter() {
+    return (
+        <>
+            <h1>Themes</h1>
+            <div>
+                {
+                    themes.map((value, index) => {
+                        return <Theme id={index} key={index}/>
+                    })
+                }
+            </div>
+        </>
+    )
+}
+
+type Theme = {
+    id: number
+}
+
+function Theme(props : Theme){
+    const changeTheme = async () => {
+        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+        if(!tab.id)
+            throw new Error("No tab id");
+        
+        chrome.tabs.sendMessage(tab.id, {
+            command: "SET_THEME",
+            theme: themes[props.id]
+        })
+
+        chrome.storage.sync.set({ 'active_theme': themes[props.id] });
+    }
+
+    return (
+        <div><span>Theme {props.id}</span><button onClick={changeTheme}>change</button></div>
+    )
+}
+
 ReactDOM.render(
-    <PopupHome/>,
+    <Router>
+        <Home />
+    </Router>,
     document.getElementById('root')
 )
