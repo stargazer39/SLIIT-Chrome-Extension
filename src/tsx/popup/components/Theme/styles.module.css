@@ -1,0 +1,6 @@
+.Theme {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px 8px 10px;
+}

@@ -1,7 +1,7 @@
 import $ from "jquery";
-import themes, { Theme } from "./themes";
+import { Theme, getTheme } from "./themes";
 
-var theme : any = themes[0];
+var theme : any = getTheme("default");
 let ready = false;
 let listeners : Function[] = [];
 
@@ -196,13 +196,12 @@ async function injectStyles(theme : Theme){
 	</style>`).appendTo("head");
 }
 
-export async function applyTheme(theme : Theme){
+export async function applyTheme(t_id : string){
     if(!ready){
-        listeners.push(() => { applyTheme(theme) });
+        listeners.push(() => { applyTheme(t_id) });
         return
     }
-
-    console.log(theme);
+    const theme = getTheme(t_id);
     const bg_src = chrome.runtime.getURL('themes/img/' + theme.image[0].path);
     await setBGimage(bg_src);
     document.documentElement.style.setProperty('--accent-main', theme.color.accent_main);

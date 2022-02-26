@@ -10,8 +10,10 @@ type TopBarProps = {
 function TopBar(props : TopBarProps) {
     return (
         <div className={styles.flex}>
-            <div className={styles.backBtn} onClick={ props.back ? goBack : () => {} }></div>
-            <h1 className={styles.title}>{props.title}</h1>
+            <div className={styles.backBtn} onClick={ props.back ? goBack : () => {} }>
+                <img src={`./img/${ props.back ? "back-button-svgrepo-com.svg" : "home-svgrepo-com.svg"}`} className={styles.backImg}></img>
+            </div>
+            <div className={styles.title}>{props.title}</div>
         </div>
     )
 }

@@ -15,7 +15,8 @@ function Home() {
                 </Link><br></br>
                 <Link component={ThemeSelecter}>
                     <button className={styles.btn}>Themes</button>
-                </Link>
+                </Link><br></br>
+                <button className={styles.btn}>More Features Comming Soon</button>
             </div>
         </>
     )

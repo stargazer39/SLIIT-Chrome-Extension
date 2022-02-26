@@ -6,7 +6,3 @@ type Module = {
     active: boolean,
     title: string
 }
-
-type Theme = {
-    id: number
-}

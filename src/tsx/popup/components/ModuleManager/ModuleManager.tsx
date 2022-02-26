@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ModuleDisplay from "../ModuleDisplay/ModuleDisplay";
 import TopBar from "../TopBar/TopBar";
+import styles from "./styles.module.css"
 
 function ModulesManager(){
     const [modules, setModules] = useState<Module[]>([]);
@@ -61,7 +62,7 @@ function ModulesManager(){
     return (
         <>
             <TopBar back={true} title="Modules"/>
-            <div>
+            <div className={styles.ModuleManager}>
                 {
                     modules.map((value, index) => {
                         return <ModuleDisplay module={value} key={index}/>

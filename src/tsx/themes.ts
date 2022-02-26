@@ -18,8 +18,20 @@ export interface Image {
    copyright: string;
 }
 
-const themes : Theme[] = [
-    {
+export function getTheme(id : string) : Theme {
+   if(themes[id])
+      return themes[id];
+   
+   // Get theme form the database and send
+   return themes["default"];
+}
+
+export function listThemes(){
+   return themes;
+}
+
+const themes : {[key : string]: Theme} = {
+    "default": {
        "name":"Hatsune Miku 1",
        "color":{
           "accent_main":"#21cebd",
@@ -36,7 +48,7 @@ const themes : Theme[] = [
           }
        ]
     },
-    {
+    "miku2": {
        "name":"Hatsune Miku 2",
        "color":{
           "accent_main":"red",
@@ -53,7 +65,7 @@ const themes : Theme[] = [
           }
        ]
     },
-    {
+    "blends": {
        "name":"Blend S",
        "color":{
           "accent_main":"#ff0090",
@@ -70,6 +82,4 @@ const themes : Theme[] = [
           }
        ]
     }
- ]
-
- export default themes;
+   }

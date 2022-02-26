@@ -11,7 +11,7 @@ body, html{
     height: 100%;
 }
 .mDisplay {
-    padding: 0 10px 0 10px;
+    padding: 0 10px 8px 10px;
     display: flex;
     flex-direction: row;
     color: white;
@@ -27,3 +27,23 @@ body, html{
     flex-shrink: 0;
     flex-grow: 1;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

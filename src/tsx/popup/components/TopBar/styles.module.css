@@ -1,13 +1,37 @@
 .backBtn {
     height: 50px;
     width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flex {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 15px;
 }
 
 .title {
     color: white;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 2px;
+    margin-left: 10px;
+}
+
+.backImg {
+    object-fit: contain;
+    width: 65%;
+    height: 65%;
+    filter: invert(1);
+    cursor: pointer;
+    transition: all 100ms;
+}
+
+.backImg:hover{
+    filter: invert(1) brightness(0.5);
 }

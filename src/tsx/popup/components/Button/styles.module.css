@@ -1,0 +1,23 @@
+.Button {
+    padding: 5px 8px;
+    background-color: blueviolet;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 100ms;
+    user-select: none;
+}
+
+.Button:hover{
+    background-color: rgb(196, 174, 216);
+    color: black;
+}
+
+.notActive{
+    background-color: red !important;
+}
+
+.notActive:hover{
+    background-color: rgb(255, 176, 176) !important;
+    color: black !important;
+}

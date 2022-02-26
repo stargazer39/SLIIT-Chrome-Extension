@@ -1,7 +1,14 @@
 import React from "react";
-import themes from "../../../themes";
+import styles from "./styles.module.css";
+import { Theme as ThemeType } from "../../../themes";
+import Button from "../Button/Button";
 
-function Theme(props : Theme){
+type ThemeProps = {
+    id: string,
+    theme: ThemeType
+}
+
+function Theme(props : ThemeProps){
     const changeTheme = async () => {
         let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -10,14 +17,18 @@ function Theme(props : Theme){
         
         chrome.tabs.sendMessage(tab.id, {
             command: "SET_THEME",
-            theme: themes[props.id]
+            theme: props.id
         })
 
-        chrome.storage.sync.set({ 'active_theme': themes[props.id] });
+        chrome.storage.sync.set({ 'active_theme': props.id });
     }
 
     return (
-        <div><span>Theme {props.id}</span><button onClick={changeTheme}>change</button></div>
+        <div className={styles.Theme}>
+            <span>Theme {props.theme.name}</span>
+            <div className="spacer"></div>
+            <Button onClick={changeTheme} name={"change"} />
+        </div>
     )
 }
 

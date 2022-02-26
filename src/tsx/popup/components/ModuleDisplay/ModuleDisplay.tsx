@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import Button from "../Button/Button";
 
 function ModuleDisplay(props : ModulesProps){
     const [active, setActive] = useState<boolean>(props.module.active);
@@ -30,7 +31,7 @@ function ModuleDisplay(props : ModulesProps){
         <div className="mDisplay">
             <span>{props.module.title}</span>
             <span className='spacer'></span>
-            <button onClick={toggleActive}>{active ? "Enable" : "Disable"}</button>
+            <Button onClick={toggleActive} name={active ? "Enable" : "Disable"} active={active}/>
         </div>
     )
 }
