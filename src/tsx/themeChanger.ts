@@ -86,6 +86,13 @@ function forElem(j_elem : JQuery<HTMLElement>){
     }catch(e){}
     
     try{
+        if(j_elem.css("border-top").search("e2a500") >= 0){
+            if(!j_elem.hasClass("newborder"))
+                    j_elem.addClass("newborder");
+        }
+    }catch(e){}
+
+    try{
         if(j_elem.css("color").search("226, 165, 0") >= 0){
             if(!j_elem.hasClass("newtext"))
                     j_elem.addClass("newtext");
@@ -154,6 +161,8 @@ async function injectStyles(theme : Theme){
 	}
 	.newborder {
 	    border-color: var(--accent-main) !important;
+        border-top: var(--accent-main) !important;
+        border-right: var(--accent-main) !important;
 	}
 	.newtext {
 	    color: var(--accent-text) !important;
@@ -161,6 +170,12 @@ async function injectStyles(theme : Theme){
     li::before {
 	    color: var(--accent-second) !important;
 	}
+    ::after {
+        color: var(--accent-second) !important;
+    }
+    #page-footer {
+        border-color: var(--accent-second) !important;
+    }
 	.navbar .nav>li>a:focus,
 	.navbar .nav>li>a:hover,
 	.navbar .nav>.active>a,

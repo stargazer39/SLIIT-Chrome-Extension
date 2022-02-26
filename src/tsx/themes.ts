@@ -27,7 +27,7 @@ const themes : Theme[] = [
           "accent_text":"#21cebd",
           "menu_bgcol":"#111111b5",
           "second_bgcol":"black",
-          "wrapper_bgcol":"#ffffffdb"
+          "wrapper_bgcol":"#ffffffeb"
        },
        "image":[
           {
@@ -44,7 +44,7 @@ const themes : Theme[] = [
           "accent_text":"#095e98",
           "menu_bgcol":"#111111b5",
           "second_bgcol":"black",
-          "wrapper_bgcol":"#fcfcfcd1"
+          "wrapper_bgcol":"#fcfcfce3"
        },
        "image":[
           {
@@ -61,7 +61,7 @@ const themes : Theme[] = [
           "accent_text":"#0090d2",
           "menu_bgcol":"#091285",
           "second_bgcol":"#091285",
-          "wrapper_bgcol":"#e5e7ffdb"
+          "wrapper_bgcol":"#e5e7fff0"
        },
        "image":[
           {
