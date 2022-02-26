@@ -1,3 +1,5 @@
 .ModuleManager {
     padding: 0px 20px;
+    overflow-y: scroll;
+    height: 100%;
 }

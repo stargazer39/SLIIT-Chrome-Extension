@@ -9,7 +9,10 @@ body, html{
 #root {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
 .mDisplay {
     padding: 0 10px 8px 10px;
     display: flex;
@@ -26,6 +29,7 @@ body, html{
 .spacer {
     flex-shrink: 0;
     flex-grow: 1;
+    background-color: transparent;
 }
 
 /* width */
